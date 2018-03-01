@@ -16,10 +16,16 @@ contract GoodAuction is AuctionInterface {
 	function bid() payable external returns(bool) {
 		// YOUR CODE HERE
 		require(msg.value > highestBid);
-		highestBidder = msg.sender;
-		highestBid = msg.value;
-		refunds[highestBidder] += msg.value;
-		return true;
+		if (msg.value > highestBid){
+			refunds[highestBidder] += highestBid;
+			highestBidder = msg.sender;
+			highestBid = msg.value;
+			return true;
+		} else{
+			msg.sender.send(msg.value);
+			return false;
+			revert();
+		}
 	}
 
 	/*  Implement withdraw function to complete new 
@@ -53,12 +59,15 @@ contract GoodAuction is AuctionInterface {
 		the security vulnerabilities. Should allow the
 		current highest bidder only to reduce their bid amount */
 	function reduceBid() external canReduce() {
+		if(msg.sender == highestBidder){
 	    if (highestBid >= 0) {
 	        highestBid = highestBid - 1;
 	        require(highestBidder.send(1));
 	    } else {
+	    	msg.sender.send(msg.value);
 	    	revert();
 	    }
+	}
 	}
 
 
