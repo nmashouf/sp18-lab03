@@ -13,7 +13,7 @@ contract BadAuction is AuctionInterface {
 	 * their funds back
 	 */
 	function bid() payable external returns (bool) {
-		bool newBid = False;
+		bool newBid = false;
 		if (msg.value > highestBid){
 			highestBidder = msg.sender;
 			highestBid = msg.value;
