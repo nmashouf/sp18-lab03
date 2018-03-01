@@ -44,7 +44,7 @@ contract GoodAuction is AuctionInterface {
 		and applying it to the reduceBid function 
 		you fill in below. */
 	modifier canReduce() {
-		_;
+		require(msg.sender == highestBidder);
 	}
 
 
