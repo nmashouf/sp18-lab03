@@ -28,6 +28,8 @@ contract GoodAuction is AuctionInterface {
 	    or no funds owed.  */
 	function withdrawRefund() external returns(bool) {
 		// YOUR CODE HERE
+		msg.sender.send(refunds[msg.sender]);
+		return true;
 	}
 
 	/*  Allow users to check the amount they are owed
