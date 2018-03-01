@@ -51,7 +51,15 @@ contract GoodAuction is AuctionInterface {
 	/*  Rewrite reduceBid from BadAuction to fix
 		the security vulnerabilities. Should allow the
 		current highest bidder only to reduce their bid amount */
-	function reduceBid() external {}
+	function reduceBid() external canReduce() {
+		if (highestBid > 0) {
+			highestBid -= 1;
+			refunds[highestBidder] -= 1;
+			highestBidder.send(1);
+		} else {
+			revert();
+			}
+	}
 
 
 	/* 	Remember this fallback function
