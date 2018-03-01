@@ -15,6 +15,11 @@ contract GoodAuction is AuctionInterface {
 		allow people to retrieve their funds  */
 	function bid() payable external returns(bool) {
 		// YOUR CODE HERE
+		require(msg.value > highestBid);
+		highestBidder = msg.sender;
+		highestBid = msg.value;
+		refunds[highestBidder] += msg.value;
+		return true;
 	}
 
 	/*  Implement withdraw function to complete new 
