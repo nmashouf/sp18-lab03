@@ -47,7 +47,7 @@ contract BadAuction is AuctionInterface {
 		How do we send people their money back?  */
 
 	function () payable {
-		highestBidder.send(highestBid);
+		revert();
 	}
 
 }
